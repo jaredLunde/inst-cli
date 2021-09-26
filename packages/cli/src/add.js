@@ -87,7 +87,7 @@ function handleExit(pkgDir) {
   process.on('uncaughtException', intHandler)
 }
 
-export default async function add({name, template, cwd, ...args}) {
+export default async function add({name, template, cwd, use = 'yarn', ...args}) {
   if (!template) {
     template = name
     name = void 0
@@ -152,8 +152,8 @@ export default async function add({name, template, cwd, ...args}) {
   )
   await cmd.get(`
     cd ${variables.PKG_DIR}
-    yarn init -y
-    yarn add ${template} --dev
+    ${use} init -y
+    ${use} add ${template} -D
   `)
   spinner.stop()
 
@@ -288,12 +288,12 @@ export default async function add({name, template, cwd, ...args}) {
     `)
   }
   // installs the template package dependencies
-  await installDeps(variables.PKG_DIR)
+  await installDeps(variables.PKG_DIR, use)
 
   spinner.start('Cleaning up template packages from node_modules')
   await cmd.get(`
      cd ${variables.PKG_DIR}
-     yarn remove ${templateName}
+     ${use} remove ${templateName}
   `)
   spinner.stop()
 

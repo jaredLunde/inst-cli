@@ -203,9 +203,9 @@ export default async function template({templateName}) {
   )
   await cmd.get(`
     cd ${variables.TPL_DIR}
-    yarn init -y
-    yarn add @inst-cli/template-utils
-    yarn add --dev prettier
+    pnpm init -y
+    pnpm add @inst-cli/template-utils
+    pnpm add -D prettier
   `)
   spinner.stop(flag('Installed dependencies'))
   // gets the package.json contents

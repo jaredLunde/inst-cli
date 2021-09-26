@@ -15,26 +15,34 @@ export default async function bin() {
     })
   })
 
-  yargs.command('new [template] [name] [-n|--no-git] [--cwd directory]', docs.add, yargs => {
-    yargs.positional('template', {
-      describe: 'The NPM package, git repository, or local template to create a package from',
-    })
+  yargs.command(
+    'new [template] [name] [-n|--no-git] [--cwd directory] [--use packageManager]',
+    docs.add,
+    yargs => {
+      yargs.positional('template', {
+        describe: 'The NPM package, git repository, or local template to create a package from',
+      })
 
-    yargs.positional('name', {
-      describe: 'The name of the new package',
-    })
+      yargs.positional('name', {
+        describe: 'The name of the new package',
+      })
 
-    yargs.option('no-git', {
-      alias: 'n',
-      describe:
-        'Creates the template package without git. This is only relevant in ' +
-        'outside of a workspace.',
-    })
+      yargs.option('no-git', {
+        alias: 'n',
+        describe:
+          'Creates the template package without git. This is only relevant in ' +
+          'outside of a workspace.',
+      })
 
-    yargs.option('cwd', {
-      describe: 'Joins the process.cwd() to this path when creating the environment',
-    })
-  })
+      yargs.option('cwd', {
+        describe: 'Joins the process.cwd() to this path when creating the environment',
+      })
+
+      yargs.option('use', {
+        describe: 'Use a package manager other than yarn',
+      })
+    }
+  )
 
   yargs.command('template [template-name] [--cwd directory]', docs.template, yargs => {
     yargs.positional('template-name', {
